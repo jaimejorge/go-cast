@@ -1,4 +1,4 @@
-[![Build status](https://secure.travis-ci.org/barnybug/go-cast.png?branch=master)](https://secure.travis-ci.org/barnybug/go-cast)
+[![Build status](https://secure.travis-ci.org/jaimejorge/go-cast.png?branch=master)](https://secure.travis-ci.org/jaimejorge/go-cast)
 
 # go-cast
 
@@ -7,7 +7,7 @@ A command line tool to control Google Chromecast devices.
 ## Installation
 
 Download the latest binaries from:
-https://github.com/barnybug/go-cast/releases/latest
+https://github.com/jaimejorge/go-cast/releases/latest
 
     $ sudo mv cast-my-platform /usr/local/bin/cast
     $ sudo chmod +x /usr/local/bin/cast

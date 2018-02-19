@@ -7,10 +7,10 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/barnybug/go-cast/controllers"
-	"github.com/barnybug/go-cast/events"
-	"github.com/barnybug/go-cast/log"
-	castnet "github.com/barnybug/go-cast/net"
+	"github.com/jaimejorge/go-cast/controllers"
+	"github.com/jaimejorge/go-cast/events"
+	"github.com/jaimejorge/go-cast/log"
+	castnet "github.com/jaimejorge/go-cast/net"
 )
 
 type Client struct {
@@ -25,7 +25,7 @@ type Client struct {
 	connection *controllers.ConnectionController
 	receiver   *controllers.ReceiverController
 	media      *controllers.MediaController
-
+    urlmedia   *controllers.UrlController
 	Events chan events.Event
 }
 
@@ -182,4 +182,22 @@ func (c *Client) Media(ctx context.Context) (*controllers.MediaController, error
 		}
 	}
 	return c.media, nil
+}
+
+func (c *Client) UrlMedia(ctx context.Context) (*controllers.UrlController, error) {
+	if c.media == nil {
+		transportId, err := c.launchMediaApp(ctx)
+		if err != nil {
+			return nil, err
+		}
+		conn := controllers.NewConnectionController(c.conn, c.Events, DefaultSender, transportId)
+		if err := conn.Start(ctx); err != nil {
+			return nil, err
+		}
+		c.urlmedia = controllers.NewUrlController(c.conn, c.Events, DefaultSender, transportId)
+		if err := c.urlmedia.Start(ctx); err != nil {
+			return nil, err
+		}
+	}
+	return c.urlmedia, nil
 }

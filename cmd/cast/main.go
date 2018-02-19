@@ -11,11 +11,11 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/barnybug/go-cast"
-	"github.com/barnybug/go-cast/controllers"
-	"github.com/barnybug/go-cast/discovery"
-	"github.com/barnybug/go-cast/events"
-	"github.com/barnybug/go-cast/log"
+	"github.com/jaimejorge/go-cast"
+	"github.com/jaimejorge/go-cast/controllers"
+	"github.com/jaimejorge/go-cast/discovery"
+	"github.com/jaimejorge/go-cast/events"
+	"github.com/jaimejorge/go-cast/log"
 	"github.com/codegangsta/cli"
 )
 
@@ -64,6 +64,12 @@ func main() {
 			Name:  "media",
 			Usage: "media commands",
 			Subcommands: []cli.Command{
+				{
+					Name:      "url",
+					Usage:     "play some media",
+					ArgsUsage: "play url [content type]",
+					Action:    cliCommand,
+				},
 				{
 					Name:      "play",
 					Usage:     "play some media",
@@ -282,6 +288,7 @@ CONNECT:
 }
 
 var minArgs = map[string]int{
+	"url": 1,
 	"play":   1,
 	"pause":  0,
 	"stop":   0,
@@ -290,6 +297,7 @@ var minArgs = map[string]int{
 }
 
 var maxArgs = map[string]int{
+	"url": 1,
 	"play":   2,
 	"pause":  0,
 	"stop":   0,
@@ -339,6 +347,16 @@ func validateFloat(val string, min, max float64) error {
 
 func runCommand(ctx context.Context, client *cast.Client, cmd string, args []string) {
 	switch cmd {
+	case "url":
+		receiver := client.Receiver()
+		_, err := receiver.QuitApp(ctx)
+		checkErr(err)
+		media, err := client.UrlMedia(ctx)
+		checkErr(err)
+		url := args[0]
+
+		_, err = media.LoadUrl(ctx, url,true,true,0)
+		checkErr(err)
 	case "play":
 		media, err := client.Media(ctx)
 		checkErr(err)

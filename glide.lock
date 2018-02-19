@@ -13,7 +13,7 @@ imports:
   - proto
 - name: github.com/hashicorp/go.net
   version: 2cee2f7697205a74352dde2d17d27a65107cbd00
-  repo: git@github.com:barnybug/go.net.git
+  repo: git@github.com:jaimejorge/go.net.git
   subpackages:
   - internal/iana
   - ipv4

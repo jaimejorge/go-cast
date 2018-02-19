@@ -1,4 +1,4 @@
-package: github.com/barnybug/go-cast
+package: github.com/jaimejorge/go-cast
 import:
 - package: github.com/codegangsta/cli
 - package: github.com/davecgh/go-spew
@@ -8,7 +8,7 @@ import:
   subpackages:
   - proto
 - package: github.com/hashicorp/go.net
-  repo: git@github.com:barnybug/go.net.git
+  repo: git@github.com:jaimejorge/go.net.git
 - package: github.com/hashicorp/mdns
 - package: golang.org/x/net
   subpackages:
